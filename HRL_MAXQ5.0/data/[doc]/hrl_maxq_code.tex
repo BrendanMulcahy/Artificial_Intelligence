@@ -1,0 +1,179 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+\usepackage{cite}
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{HRL-MaxQ Java Code Manual}
+\author{Feng Cao ::fxc100@case.edu}
+\date{April 1, 2012} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+This document describes how to use the HRL-MaxQ code, a package that includes a Java implementation of several Reinforcement Learning (RL) algorithms and typical domains (i.e. environments). \\
+
+The algorithms implemented are:
+\begin{itemize}
+\item {\bf Q Learning}: standard q learning algorithm. 
+\item {\bf MaxQ}: MaxQ algorithm introduced in ~\cite{d-hrl-00}, and some of variants.
+\item {\bf Bayesian MaxQ}: Bayesian MaxQ algorithms proposed in our work.
+\end{itemize}
+
+The environments implemented include:
+\begin{itemize}
+\item {\bf Taxi Domain}: As introduced in Figure 1 of ~\cite{d-hrl-00}.
+\item {\bf Wargus Domain}: As introduced in ~\cite{mehta.icml08}. 
+\item {\bf Simple Maze Domain}: As introduced in Figure 6 of ~\cite{d-hrl-00}.
+\item {\bf Hallway Domain}: As introduced in Figure 14 of ~\cite{d-hrl-00}.
+\item {\bf FourDoorMaze Domain}: Incomplete, should not be used. 
+\end{itemize}
+
+\section{Command line format}
+Command line arguments are used to specify the agent and environment, as well as other parameters, to be use in the running of experiment. Figure \ref{fig:usage} shows the usage of the command line arguments:
+
+\begin{figure}
+\centering
+\begin{tabular}{|ll|}
+\hline
+\multicolumn{2}{|l|}
+{{\bf Usage}: java -cp bin;lib/* edu.cwru.eecs.rl.Main} \\
+ -a $\langle$algorithm, pr$\rangle$ 			&Specify the rl algorithm to be used by agent: \\
+                             			&flatq $|$ maxq $|$ bmaxq \\
+		                             	&follow by pseudo reward settings: \\
+			                          &none $|$ manual $|$ bayes $|$ func \\
+ -e $\langle$domain, param$\rangle$          	&Specify the domain name: \\
+                             			&taxi $|$ hallway $|$ simplemaze $|$ wargus $|$ fourdoormaze \\
+                             			&followed with parameters \\
+ -exp $\langle$\#episode, max step$\rangle$    &Specify the number of episodes to run and max \\
+                             			&step each episode \\
+ -h                          			&display help info \\
+ -info $\langle$extra info$\rangle$          		&extra information of the save to file \\
+ -run $\langle$\#run$\rangle$                         &multi-run \\
+ -to $\langle$save\_to\_dir$\rangle$           		&save the result to the specified directory \\
+& \\
+{\bf Examples:} & \\
+\multicolumn{2}{|l|}
+{java -cp bin:lib/* edu.cwru.eecs.rl.Main -a flatq -e taxi 0 -exp 1000 1000 -to res\_taxi} \\
+\multicolumn{2}{|l|}
+{java -cp bin:lib/* edu.cwru.eecs.rl.Main -a maxq manual -e taxi 0.15 -exp 1000 1000 -to res\_taxi}  \\
+\multicolumn{2}{|l|}
+{java -cp bin:lib/* edu.cwru.eecs.rl.Main -a bmaxq bayes -e simplemaze 0 -exp 500 500} \\
+							&-to res\_simplemaze \\
+\hline
+\end{tabular}
+\caption{Usage of command line arguments}
+\label{fig:usage}
+\end{figure}
+
+You could also multi-thread the experiment by using {\bf edu.cwru.eecs.rl.MultiThreadMain}
+
+\subsection{Parameter setting}
+There are many parameters involved here, either in the algorithm or in the environment. 
+\begin{itemize}
+\item Agent parameter: (only for maxq and bmaxq)
+\subitem none: use zero pseudo reward
+\subitem manual: use manually set pseudo reward
+\subitem bayes: use bayesian pseudo reward
+\subitem func: use non-bayesian pseudo reward
+
+\item Environment parameter: 
+\subitem taxi: noise
+\subitem hallway: noise
+\subitem simplemaze: noise
+\subitem wargus: arg1:config (e.g. 3322), arg2: noise
+
+\item Experiment parameter: 
+\subitem arg1: number of episodes
+\subitem arg2: max step each episode
+
+\item Other parameters in different agents: (you could find them in the constructor of each agent class. They are not supposed to be specified from command line arguments. If you want to modify them, please modify the agent java files directly)
+\subitem epsilon: exploration rate -- for all agents
+\subitem alpha: learning rate -- for all agents
+\subitem iter\_sim: number of episodes per simulation -- for Bayesian MaxQ agents 
+\subitem maxStep\_sim: max step each simulation episode -- for Bayesian MaxQ agents 
+\subitem epsilon\_sim: exploration rate in the simulation -- for Bayesian MaxQ agents 
+\subitem alpha\_sim: learning rate in the simulation -- for Bayesian MaxQ agents 
+
+\end{itemize}
+
+\section{How to implement your own Agent and Environment}
+\subsection{Implementing Agent}
+All the related java files are under package {\it edu.cwru.eecs.rl.agent}. One could refer to {\it FlatQAgent.java} for a sample implementation of agent. Basically, in order to add a new agent, say {\it NewAgent}, to the package, {\it NewAgent} has to extends {\it Agent} or its subclass. Also, {\it AgentType.java} defines different types of agent. So you may probably want to add your own type into this enum. The reason why we use an {\it AgentType} is that each implementation of Agent, say MaxQAgent, may contain agents with different behaviors. Thus the member variable {\it agentType} helps decide what behavior is expected. 
+
+\subsection{Implementing Environment}
+All the related java files are under package {\it edu.cwru.eecs.rl.env}. One could refer to {\it TaxiEnv.java} for a sample implementation of environment. Basically, in order to add a new environment, say {\it NewEnv}, to the package, {\it NewEnv} has to extends {\it Environment} or its subclass. Also, {\it }
+
+\bibliography{main}{}
+\bibliographystyle{plain}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

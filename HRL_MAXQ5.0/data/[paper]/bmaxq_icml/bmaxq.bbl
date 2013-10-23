@@ -1,0 +1,140 @@
+\begin{thebibliography}{20}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Andre \& Russell(2002)Andre and Russell]{alisp}
+Andre, D. and Russell, S.
+\newblock {State Abstraction for Programmable Reinforcement Learning Agents}.
+\newblock In \emph{Proceedings of AAAI}, 2002.
+
+\bibitem[Barto \& Mahadevan(2003)Barto and Mahadevan]{barto.deds03}
+Barto, Andrew~G. and Mahadevan, Sridhar.
+\newblock Recent advances in hierarchical reinforcement learning.
+\newblock \emph{Discrete Event Dynamic Systems}, 13\penalty0 (4):\penalty0
+  341--379, 2003.
+
+\bibitem[Brafman et~al.(2001)Brafman, Tennenholtz, and
+  Kaelbling]{Brafman01r-max}
+Brafman, Ronen~I., Tennenholtz, Moshe, and Kaelbling, Pack.
+\newblock R-max - a general polynomial time algorithm for near-optimal
+  reinforcement learning.
+\newblock \emph{Journal of Machine Learning Research}, 2001.
+
+\bibitem[Dai et~al.(2010)Dai, Chen, Cao, and Wu]{Zhao-bhrl-2010}
+Dai, Zhaohui, Chen, Xin, Cao, Weihua, and Wu, Min.
+\newblock Model-based learning with bayesian and maxq value function
+  decomposition for hierarchical task.
+\newblock In \emph{Proceedings of the 8th World Congress on Intelligent Control
+  and Automation}, 2010.
+
+\bibitem[Dearden et~al.(1998)Dearden, Friedman, and Russell]{Dearden98}
+Dearden, R., Friedman, N., and Russell, S.
+\newblock Bayesian {Q}-learning.
+\newblock In \emph{Proceedings of the Fifteenth National Conference on
+  Artificial Intelligence}, 1998.
+\newblock URL \url{http://www.cs.huji.ac.il/~nir/Papers/DFR1.ps}.
+
+\bibitem[Dearden et~al.(1999)Dearden, Friedman, and Andre]{dearden.uai99}
+Dearden, R., Friedman, N., and Andre, D.
+\newblock Model based bayesian exploration.
+\newblock In \emph{Proceedings of Fifteenth Conference on Uncertainty in
+  Artificial Intelligence}. Morgan Kaufmann, 1999.
+
+\bibitem[Dietterich(2000)]{d-hrl-00}
+Dietterich, Thomas~G.
+\newblock Hierarchical reinforcement learning with the maxq value function
+  decomposition.
+\newblock \emph{Journal of Artificial Intelligence Research}, 13:\penalty0
+  227--303, 2000.
+
+\bibitem[Engel et~al.(2003)Engel, Mannor, and Meir]{Engel03}
+Engel, Y., Mannor, S., and Meir, R.
+\newblock Bayes meets {B}ellman:the {G}aussian process approach to temporal
+  difference learning.
+\newblock In \emph{Proceedings of the 20th Internationl Conference on Machine
+  Learning}, 2003.
+\newblock URL \url{www.cs.ualberta.ca/~yaki/papers/icml_gptd.ps}.
+
+\bibitem[Ghavamzadeh \& Engel(2007{\natexlab{a}})Ghavamzadeh and
+  Engel]{ghavamzadeh:icml07}
+Ghavamzadeh, M. and Engel, Y.
+\newblock Bayesian actor-critic algorithms.
+\newblock In Ghahramani, Zoubin (ed.), \emph{Proceedings of the 24th Annual
+  International Conference on Machine Learning (ICML 2007)}, pp.\  297--304.
+  Omnipress, 2007{\natexlab{a}}.
+
+\bibitem[Ghavamzadeh \& Engel(2007{\natexlab{b}})Ghavamzadeh and
+  Engel]{Ghavamzadeh07bayesianpolicy}
+Ghavamzadeh, Mohammad and Engel, Yaakov.
+\newblock Bayesian policy gradient algorithms.
+\newblock In \emph{Advances in Neural Information Processing Systems 19}. MIT
+  Press, 2007{\natexlab{b}}.
+
+\bibitem[Jong \& Stone(2008)Jong and Stone]{rmax-maxq}
+Jong, Nicholas~K. and Stone, Peter.
+\newblock Hierarchical model-based reinforcement learning: R-max + maxq.
+\newblock In \emph{Proceedings of the 25 th International Conference on Machine
+  Learning}, 2008.
+
+\bibitem[Kaelbling et~al.(1996)Kaelbling, Littman, and Moore]{kaelbling.jair96}
+Kaelbling, Leslie~Pack, Littman, Michael~L., and Moore, Andrew~W.
+\newblock Reinforcement learning: A survey.
+\newblock \emph{Journal of Artificial Intelligence Research}, 4:\penalty0
+  237--285, 1996.
+
+\bibitem[Lazaric \& Ghavamzadeh(2010)Lazaric and
+  Ghavamzadeh]{Lazaric_bayesianmulti-task}
+Lazaric, Alessandro and Ghavamzadeh, Mohammad.
+\newblock Bayesian multi-task reinforcement learning.
+\newblock In \emph{Proc. 27th International Conference on Machine Learning},
+  2010.
+
+\bibitem[Mehta et~al.(2008)Mehta, Ray, Tadepalli, and Dietterich]{mehta.icml08}
+Mehta, N., Ray, S., Tadepalli, P., and Dietterich, T.
+\newblock Automatic discovery and transfer of {MAXQ} hierarchies.
+\newblock In McCallum, Andrew and Roweis, Sam (eds.), \emph{Proceedings of the
+  25th International Conference on Machine Learning}, pp.\  648--655.
+  Omnipress, 2008.
+
+\bibitem[Parr(1998)]{parr:thesis}
+Parr, Ronald~Edward.
+\newblock \emph{Hierarchical Control and Learning for Markov Decision
+  Processes}.
+\newblock PhD thesis, 1998.
+
+\bibitem[Stolle \& Precup(2002)Stolle and Precup]{stolle.book02}
+Stolle, Martin and Precup, Doina.
+\newblock \emph{Learning Options in reinforcement Learning}, volume 2371/2002
+  of \emph{Lecture Notes in Computer Science}, pp.\  212--223.
+\newblock Springer, 2002.
+
+\bibitem[Strens(2000)]{Strens}
+Strens, M. J.~A.
+\newblock A {B}ayesian framework for reinforcement learning.
+\newblock In \emph{Proceeding of the 17th International Conference on Machine
+  Learning}, 2000.
+\newblock URL \url{http://uk.geocities.com/mjstrens/icml.pdf}.
+
+\bibitem[Sutton \& Barto(1998)Sutton and Barto]{suttbarto}
+Sutton, R.S. and Barto, A.~G.
+\newblock \emph{Reinforcement Learning: An Introduction}.
+\newblock MIT Press, 1998.
+
+\bibitem[Thompson(1933)]{Thompson}
+Thompson, W.~R.
+\newblock On the likelihood that one unknown probability exceeds another in
+  view of the evidence of two samples.
+\newblock \emph{Biometrika}, 25:\penalty0 285--294, 1933.
+
+\bibitem[Wilson et~al.(2007)Wilson, Fern, Ray, and Tadepalli]{icml2007}
+Wilson, Aaron, Fern, Alan, Ray, Soumya, and Tadepalli, Prasad.
+\newblock Multi-task reinforcement learning: a hierarchical bayesian approach.
+\newblock In \emph{ICML '07: Proceedings of the 24th international conference
+  on Machine learning}, pp.\  1015--1022, New York, NY, USA, 2007. ACM.
+\newblock ISBN 978-1-59593-793-3.
+\newblock \doi{http://doi.acm.org/10.1145/1273496.1273624}.
+
+\end{thebibliography}

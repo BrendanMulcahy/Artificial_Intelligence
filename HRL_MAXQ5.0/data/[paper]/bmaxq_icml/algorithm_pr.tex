@@ -1,0 +1,154 @@
+\section{Bayesian MAXQ Algorithm}
+\label{sec:algo}
+\begin{algorithm}[t]
+\caption{{\sc Bayesian\_maxq}} \label{alg:bmaxq}
+\begin{algorithmic}[1]
+\REQUIRE Task $i$, State $s$, Update Interval $k$, Simulation Episodes $Sim$
+\ENSURE Next state $s'$, steps taken $N$
+\IF{$i$ is primitive}
+\STATE Execute $i$, observe $r$, $s'$
+\STATE Update current posterior parameters $\Psi$ using ($s$, $i$, $r$, $s'$)~\label{line:update}
+\STATE Update current value estimate: $V(i,s) \leftarrow (1-\alpha)\cdot V(i,s)+\alpha\cdot r$
+\STATE $Count(i) \leftarrow Count(i)+1$
+\RETURN $(s', 1, r)$
+\ELSE 
+\STATE $N \leftarrow 0$ \COMMENT{$i$ is composite}
+\STATE $taskStack \leftarrow Stack()$, where taskStack is the stack of tuple $\langle task, state, cr \rangle$ %visited while executing each subtasks of i, $cr$ means cumulative rewards obtained from executing the task $a$, exiting from state $s$.
+\STATE $CR \leftarrow 0$
+\WHILE {$i$ is not terminated} 
+\STATE {\sc Recompute\_value}$(i, k, Sim)$
+\STATE $a\leftarrow \pi_{g}(i, s)$ \COMMENT{$\pi_{g}$ is the greedy policy from the current value function}
+\STATE $\langle s', N_a, cr\rangle \leftarrow$ {\sc Bayesian\_maxq}($a$, $s$) \COMMENT{recursive call to child task}~\label{line:recursive}
+\STATE $taskStack.push(\langle a, s', cr \rangle)$    
+\STATE $a^*\leftarrow \arg\max_{a'}\bigl[C(i,s',a')+V(a',s')\bigr]$ \COMMENT{update completion function in $i$}~\label{line:comp1}
+\STATE $C(i,s,a)\leftarrow(1-\alpha)\cdot C(i,s,a) + \alpha\cdot \gamma^{N_a}\bigl[C(i,s',a^*)+V(a^*,s') \bigr]$~\label{line:comp2}
+\STATE $\tilde{C}(i,s,a)\leftarrow(1-\alpha)\cdot \tilde{C}(i,s,a) + \alpha\cdot \gamma^{N_a}\bigl[${\sc Pr}$(i, s')+\tilde{C}(i,s',a^*)+V(a^*,s') \bigr]$
+\STATE $s\leftarrow s'$
+\STATE $CR \leftarrow CR+cr$
+\STATE $N\leftarrow N+N_a$
+\STATE $Count(i) \leftarrow Count(i)+1$
+\ENDWHILE
+\STATE {\sc Update\_pseudo\_reward}($taskStack$)
+\RETURN $(s', N, CR)$
+\ENDIF
+\end{algorithmic}
+\end{algorithm} 
+
+In this section, we describe our approach to incorporating
+probabilistic priors into HRL. The intuition behind our approach is
+quite straightforward: we follow the basic Bayesian model-based RL
+procedure outlined in Section~\ref{sec:relwork} and adapt it to the
+{\sc maxq} framework. At each step we have a distribution over
+environment models (initially the prior). Our algorithm has two
+subroutines: the main {\sc Bayesian\_MAXQ} routine
+(Algorithm~\ref{alg:bmaxq}) and an auxiliary {\sc Recompute\_value}
+routine (Algorithm~\ref{alg:recompvalue}). Intuitively, the main {\sc
+  Bayesian\_MAXQ} routine interacts with the world using the current
+value estimates and updates the posterior over the environment models.
+Every $k$ steps, it calls the {\sc Recompute\_value} function. This
+function then resamples a model from the posterior and recomputes the
+value and completion functions to reflect this new model. Just as in
+standard model-based RL, this procedure continues until the
+hierarchical policy converges. In this description, the value $V$ and
+completion $C$ functions are assumed to be global.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Update-pseudo-reward
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[t]
+\caption{{\sc Update\_pseudo\_reward}}
+\begin{algorithmic}[1]
+\REQUIRE Stack$\langle Task, ExitState, CumulativeReward \rangle$ $taskStack$
+\STATE $ tempCR \leftarrow 0$
+\STATE $\langle a', s', cr' \rangle \leftarrow taskStack.pop()$
+\WHILE {$taskStack$ is not empty}
+\STATE $\langle a, s, cr \rangle \leftarrow taskStack.pop()$
+\STATE $ tempCR \leftarrow tempCR+cr'$
+\STATE $cr' \leftarrow cr$
+\STATE Update current posterior parameters $\Phi$ using ($a$, $s$, $tempCR$)
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Compute-policy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[t]
+\caption{{\sc Recompute\_value}} \label{alg:recompvalue}
+\begin{algorithmic}[1]
+\REQUIRE Task $i$, Update Interval $k$, Simulation Episodes $Sim$
+\ENSURE Recomputed value and completion functions for the task graph below and including $i$
+\IF{$Count(i) < k$}
+\RETURN~\label{line:checkk}
+\ENDIF
+\IF{$i$ is primitive}  
+\STATE Sample new transition and reward parameters $\Theta$ from
+current posterior $\Psi$~\label{line:sample}
+\ELSE
+\FORALL {child tasks $a$ of $i$}
+\STATE {\sc Recompute\_value}($a$, $k$, $Sim$)
+\ENDFOR
+\FOR{$Sim$ episodes}
+\STATE $s \leftarrow$ random nonterminal state of $i$
+\STATE Run {\sc maxq-q}($i$, $s$, $\Theta$) \COMMENT{Table 4 in~\cite{d-hrl-00}}
+\ENDFOR
+\ENDIF
+\STATE $Count(i) \leftarrow 0$
+\end{algorithmic}
+\end{algorithm} 
+
+
+At the start of each episode, the {\sc Bayesian\_MAXQ} routine is
+called with the $Root$ task and the initial state for the current
+episode. The standard MAXQ execution protocol is then followed, where
+each task chooses an action based on its current value function
+(initially random). When a primitive action is reached and executed,
+it updates the posterior over model parameters
+(Line~\ref{line:update}) and its own value estimate (which is just the
+reward function for primitive actions). When a task exits and returns
+to its parent, the parent subsequently updates its completion function
+based on the current estimates of the value of the exit state
+(Lines~\ref{line:comp1}~and~\ref{line:comp2}). Note that in {\sc
+  maxq}, the value function of a composite task can be (recursively)
+computed using the completion functions of subtasks and the rewards
+obtained by executing primitive actions, so we do not need to
+separately store or update the value functions (except for the
+primitive actions where the value function is the reward). Finally,
+each primitive action maintains a count of how many times it has been
+executed and each composite task maintains a count of how many child
+actions have been taken.
+
+When $k$ (an algorithm parameter) steps have been executed in a
+composite task, {\sc Bayesian\_MAXQ} calls {\sc Recompute\_value} to
+re-estimate the value and completion functions (the check on $k$ is
+shown in {\sc Recompute\_value}, Line~\ref{line:checkk}). When
+activated, this function recursively re-estimates the value/completion functions for all
+ subtasks of the current task. At the level of a primitive action, this
+simply involves resampling the reward and transition parameters from
+the current posterior over models. For a composite task, we use the
+{\sc maxq-0} algorithm (Table 2 in~\cite{d-hrl-00}).~\footnote{The {\sc
+    maxq-0} algorithm assumes there are no {\em pseudo-rewards}, i.e.,
+  preferences over possible exits for a subtask. If this is not true,
+  this can be replaced by the {\sc maxq-q} algorithm.} We run this algorithm
+for $Sim$ episodes, starting with the current subtask as the root. This algorithm
+recursively updates the completion function of the task graph below
+the current task. Note that in this step, the subtasks with primitive
+actions use model-based updates. That is, when a primitive action is
+``executed'' in such tasks, the currently sampled transition function
+(part of $\Theta$ in Line~\ref{line:sample}) is used to find the next
+state, and then the associated reward is used to update the completion
+function. This is similar to
+Lines~\ref{line:recursive},~\ref{line:comp1} and \ref{line:comp2} in
+{\sc Bayesian\_maxq}, except that it uses the sampled model $\Theta$
+instead of the real environment. After {\sc Recompute\_value}
+terminates, a new set of value/completion functions are available for
+{\sc Bayesian\_maxq} to use to select actions.
+
+We note that in the ideal case, instead of running for $Sim$ episodes,
+we would simply run {\sc maxq-0} to convergence; in practice this is
+not possible, so we impose an arbitrary cutoff. Similarly, ideally we
+would set $k=1$. In this case, in fact, Lines~\ref{line:comp1}
+and~\ref{line:comp2} are not needed, since the completion functions
+would be recomputed every step. Again, this is generally not possible in
+practice. 
+

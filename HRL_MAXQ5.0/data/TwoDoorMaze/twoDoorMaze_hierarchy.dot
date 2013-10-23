@@ -1,0 +1,25 @@
+digraph M {
+
+node [shape=record];
+edge [arrowhead=vee];
+
+0 [label="Root"];
+1 [label="Exit\n(Exit left room)"];
+2 [label="GotoGoal\n(Reach the goal G)"];
+3 [label="North"];
+4 [label="South"];
+5 [label="East"];
+
+
+0->1;
+0->2;
+
+1->3;
+1->4;
+1->5;
+2->3;
+2->4;
+2->5;
+}
+
+

@@ -1,0 +1,23 @@
+\begin{table}[t]
+\caption{}
+\label{timing-table}
+\begin{center}
+\begin{tabular}{| p{3cm} | l | l | l | l | l |}
+\hline
+\multirow{5}{*}{Method} 	&Tot. Time  for	&\multicolumn{2}{|c|}{Avg. Time for}  &\multicolumn{2}{|c|}{Avg. Time for}			\\ 
+						&500 Episodes 	&\multicolumn{2}{|c|}{Episodes with} 	 &\multicolumn{2}{|c|}{Episodes with}			\\
+						&(s)				&\multicolumn{2}{|c|}{5-20 Steps}	&\multicolumn{2}{|c|}{70-120 Steps} 		\\ 
+						&				&\multicolumn{2}{|c|}{(near-optimal)}		&\multicolumn{2}{|c|}{(sub-optimal)}				\\ \cline{3-6}
+						&				&Time (ms)	&Count				&Time (ms)	&Count \\ \hline
+						
+MaxQ							&0.53	&- 		&0		&1.49 	&171				\\ \hline
+Bayesian MaxQ with Uninformed Prior	&179	&21		&81 		&332  	&39 				\\ \hline
+Bayesian MaxQ with Good Prior		&14		&17 		&209 	&84 		&3 				\\ \hline
+FlatQ							&1.15	&- 		&0		&0.37	&18			\\ \hline
+Bayesian MB Q	 with Uninformed Prior	&232	&162 	&211 	&851	&25 					\\ \hline
+Bayesian MB Q with Good Prior		&119	&172 	&316 	&- 		&0 				\\ \hline
+Bayesian MB Q with Good Prior \& Lower \# of Sim. 	
+								&934	&- 		&2		&687	&56		\\ \hline
+\end{tabular}
+\end{center}
+\end{table}

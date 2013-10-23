@@ -1,0 +1,89 @@
+\documentclass{article} % For LaTeX2e
+\usepackage[classfont=slant,langfont=caps,basic]{complexity}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[scriptsize,tight]{subfigure}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{xspace}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{nips12submit_e,times}
+%\documentstyle[nips12submit_09,times,art10]{article} % For LaTeX 2.09
+
+
+\title{Bayesian Hierarchical Reinforcement Learning}
+
+\author{
+Feng Cao\\
+Department of Electrical Engineering and Computer Science\\
+Case Western Reserve University\\
+Cleveland, OH 44106 \\
+\texttt{fxc100@case.edu} \\
+\And
+Soumya Ray \\
+Department of Electrical Engineering and Computer Science \\
+Case Western Reserve University\\
+Cleveland, OH 44106 \\
+\texttt{sray@case.edu} \\
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We describe an approach to incorporating Bayesian priors in the {\sc
+maxq} framework for hierarchical reinforcement learning (HRL). We
+define priors on the primitive environment model and on task
+pseudo-rewards. Since models for composite tasks can be complex, we
+use a mixed model-based/model-free learning approach to find an
+optimal hierarchical policy. We show empirically that (i) our approach
+results in improved convergence over non-Bayesian baselines, given
+sensible priors, (ii) using both task hierarchies and Bayesian priors
+is better than either alone, (iii) taking advantage of the task
+hierarchy significantly reduces the computational cost of Bayesian
+reinforcement learning and (iv) in this framework, task pseudo-rewards
+can be learned instead of being manually specified, leading to
+automatic learning of hierarchically optimal rather than recursively
+optimal policies.
+\end{abstract}
+
+\input{introduction}
+\input{relwork}
+\input{algorithm}
+\input{experiments}
+\input{conclusion}
+
+%\subsubsection*{Acknowledgments}
+%
+%Use unnumbered third level headings for the acknowledgments. All
+%acknowledgments go at the end of the paper. Do not include 
+%acknowledgments in the anonymized submission, only in the 
+%final paper. 
+%
+%\subsubsection*{References}
+
+\bibliographystyle{unsrt}
+{\footnotesize
+\bibliography{main}
+}
+
+\end{document}

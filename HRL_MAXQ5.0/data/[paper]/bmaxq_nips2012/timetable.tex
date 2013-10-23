@@ -1,0 +1,79 @@
+
+\begin{table}[t] \footnotesize
+
+\caption{CPU time for methods on {\sf Taxi-World}.}
+
+\label{tab:time}
+
+\begin{center}
+
+\begin{tabular}{| p{4cm} | l |}
+
+\hline
+
+\multirow{3}{*}{Method} & Time for \\
+
+&500 Episodes (s)\\ \hline
+
+Bayesian MaxQ, Uninformed Prior &205\\ 
+
+Bayesian Model-based Q, Uninformed Prior &4684\\ 
+
+Bayesian MaxQ, Good Prior &96\\ 
+
+Bayesian Model-based Q, Good Prior &3089\\ 
+
+Bayesian Model-based Q, Good Prior \& Comparable Simulations
+&4006 \\ 
+
+RMaxQ &41997 \\
+
+MaxQ &2.06 \\
+
+FlatQ &1.77 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\begin{table}[t] \footnotesize
+
+\caption{CPU time for methods on {\sf Modified-Taxi-World}.}
+
+\label{tab:time}
+
+\begin{center}
+
+\begin{tabular}{| p{4cm} | l |}
+
+\hline
+
+\multirow{3}{*}{Method} & Time for \\
+
+&500 Episodes (s)\\ \hline
+
+B-MaxQ Bayes PR &211\\ 
+
+B-MaxQ Manual PR &183\\ 
+
+B-MaxQ No Pr &1364\\ 
+
+MaxQ Non-Bayes PR &17\\ 
+
+MaxQ Manual PR &2.3 \\ 
+
+MaxQ No PR &6.8 \\
+
+ALispQ &4.9 \\
+
+FlatQ &2.23 \\
+
+B-MaxQ Bayes PR (Standard Taxi) &221\\
+
+ALispQ (Standard Taxi) &3.5 \\
+
+\hline
+\end{tabular}
+\end{center}
+\end{table}

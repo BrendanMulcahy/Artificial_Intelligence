@@ -1,0 +1,81 @@
+\section{Introduction}
+\label{sec:intro}
+
+Reinforcement learning (RL) is a well known framework that formalizes
+decision making in unknown, uncertain environments. RL agents learn
+policies that map environment states to available actions while
+optimizing some measure of long-term utility. While various algorithms
+have been developed for RL~\cite{suttbarto}, and applied successfully
+to a variety of tasks~\cite{kaelbling.jair96}, the standard RL setting
+suffers from at least two drawbacks. First, it is difficult to scale
+standard RL approaches to large state spaces (the well-known ``curse
+of dimensionality''). Second, vanilla RL approaches do not incorporate
+prior knowledge about the environment and good policies.
+
+{\em Hierarchical reinforcement learning} (HRL)~\cite{barto.deds03}
+attempts to address the scaling problem by simplifying the overall
+decision making problem in different ways. For example, we could
+introduce macro-operators that can be used by the agent as part of its
+policy. These operators carry out sequences of primitive actions, so
+planning at the level of these operators may  result in
+simpler policies~\cite{stolle.book02}. Another idea is to decompose
+the task's overall value function in a variety of ways, for example by
+defining task hierarchies~\cite{d-hrl-00} or partial programs with
+choice points~\cite{alisp}. Here, the structure of the decomposition
+provides several benefits: first, for the ``higher level'' subtasks,
+policies are defined by calling ``lower level'' subtasks (which may
+themselves be quite complex); as a result policies for higher level
+subtasks may be expressed compactly. Second, a task hierarchy or
+partial program can impose constraints on the space of policies by
+encoding knowledge about the structure of good policies and thereby
+reduce the search space. Third, learning within subtasks allows {\em
+  state abstraction}, that is, some state variables can be ignored
+because they do not affect the policy within that subtask. This also
+simplifies the learning problem.
+
+While HRL attempts to address the scalability issue, it does not take
+into account probabilistic prior knowledge the agent may have about
+the task. For example, the agent may have some idea about where
+high/low utility states may be located and what their utilities may
+be, or some idea about the approximate shape of the value function or
+policy. {\em Bayesian reinforcement learning} addresses this issue by
+incorporating priors on models~\cite{dearden.uai99}, value
+functions~\cite{Dearden98, Engel03} or
+policies~\cite{Ghavamzadeh07bayesianpolicy}.
+Specifying good priors leads to many benefits, including initial good
+policies, directed exploration towards regions of uncertainty, and
+faster convergence to the optimal policy.
+
+In our work, we propose an approach that incorporates Bayesian priors
+into hierarchical reinforcement learning. We use the {\sc maxq} framework
+for HRL~\cite{d-hrl-00}, that 
+decomposes the overall task into subtasks so that value functions of
+the individual subtasks can be combined to recover the value function
+of the overall task. We extend this framework by incorporating priors
+on the primitive environment model and on task pseudo-rewards. In
+order to avoid building models for composite tasks (which can be very
+complex), we adopt a mixed model-based/model-free learning approach.
+We empirically evaluate our algorithm to understand the effect of the
+priors in addition to the task hierarchy. Our experiments indicate
+that: (i) taking advantage of probabilistic prior knowledge can lead
+to faster convergence, even for HRL, (ii) task hierarchies and
+Bayesian priors can be complementary sources of information, and using
+both sources is better than either alone, (iii) taking advantage of
+the task hierarchy can reduce the computational cost of Bayesian RL,
+which generally tends to be very computation-intensive, and (iv) task
+pseudo-rewards can be learned instead of being manually specified,
+leading to automatic learning of hierarchically optimal rather than
+recursively optimal policies.  In this way Bayesian RL and HRL are
+synergistic: Bayesian RL improves convergence of HRL and can
+ learn hierarchy parameters, while HRL can reduce the cost
+of Bayesian RL.
+
+Our work assumes the probabilistic priors to be given in
+advance and focuses on learning with them. Other work has addressed
+the issue of obtaining these priors. For example, one source of prior
+information is multi-task reinforcement
+learning~\cite{Lazaric_bayesianmulti-task, icml2007}, where an
+agent solves a sequence of RL tasks, and uses the solutions of
+previous tasks to build priors over models or policies for future
+tasks. We also assume the task hierarchy is given. Other work has
+explored learning {\sc maxq} hierarchies in different settings~\cite{mehta.icml08}.

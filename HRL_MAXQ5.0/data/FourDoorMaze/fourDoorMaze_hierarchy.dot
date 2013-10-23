@@ -1,0 +1,45 @@
+digraph M {
+
+node [shape=record];
+edge [arrowhead=vee];
+
+0 [label="Root"];
+1 [label="Room3"];
+2 [label="Room4"];
+3 [label="Room1"];
+4 [label="Room2"];
+5 [label="EnterCommon"];
+6 [label="ExitCommon"];
+7 [label="North"];
+8 [label="East"];
+9 [label="West"];
+10 [label="South"];
+
+
+0->1;
+0->2;
+0->3;
+0->4;
+
+1->5;
+2->5;
+3->5;
+4->5;
+
+1->6;
+2->6;
+3->6;
+4->6;
+
+5->7;
+5->8;
+5->9;
+5->10;
+
+6->7;
+6->8;
+6->9;
+6->10;
+}
+
+

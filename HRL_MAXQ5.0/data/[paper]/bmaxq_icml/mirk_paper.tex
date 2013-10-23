@@ -1,0 +1,72 @@
+\documentclass[]{article}  
+\usepackage[classfont=slant,langfont=caps,basic]{complexity}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[scriptsize,tight]{subfigure}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{xspace}
+\usepackage[]{icml2012}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\def\Gartner{G\"{a}rtner}
+\newlang{\MIREGRESS}{MiRegress}
+\newlang{\MAXMIREGRESS}{MaxMiRegress}
+\newlang{\kSAT}{$k$-SAT}
+\def\ihat{\boldsymbol{e}_{i}}
+\def\jhat{\boldsymbol{e}_{j}}
+\def\hyp{\mathbf{w}}
+\renewcommand{\th}{\textsuperscript{th}\xspace}
+
+\begin{document}
+\twocolumn[
+\icmltitle{
+  Set Kernels for Multiple-Instance Regression
+}
+\icmlauthor{Gary Doran}{gary.doran@case.edu}
+\icmladdress{Case Western Reserve University}
+\icmlauthor{Soumya Ray}{sray@case.edu}
+\icmladdress{Case Western Reserve University}
+\icmlkeywords{Support Vector Machine, Multiple-Instance Learning}
+
+\vskip 0.3in
+]
+
+\begin{abstract} \small\baselineskip=9pt
+Support vector machines with kernels over sets of instances ({\em
+    set kernels}) have been successfully used to solve
+  multiple-instance classification tasks in prior work. We investigate
+  the application of set kernels to multiple-instance regression
+  (MIR). We identify sufficient conditions on the data which enable
+  the induction of fitting functions with bounded error when set
+  kernels are used and illustrate these conditions with synthetic
+  data. We analyze a variant of the MIR problem, {\em max-MIR}),
+  where the response of the bag is the maximum of the responses of the
+  instances in it and show that, in spite of the additional assumption
+  on the response, this problem is NP-complete. %and as hard to solve
+%  in general with set kernels as the standard formulation. 
+ We empirically evaluate support vector regression with set kernels on
+  several real world MIR problems. Our analysis indicates
+  that support vector machines with set kernels are competitive with
+  or outperform state-of-the-art baselines on these problems.
+\end{abstract}
+
+\input{intro.tex}
+\input{background.tex}
+\input{analysis.tex}
+\input{experiments.tex}
+\input{discussion.tex}
+\input{conclusion.tex}
+
+\bibliographystyle{icml2012}
+{\footnotesize
+\bibliography{main,bibliography}
+}
+\end{document}

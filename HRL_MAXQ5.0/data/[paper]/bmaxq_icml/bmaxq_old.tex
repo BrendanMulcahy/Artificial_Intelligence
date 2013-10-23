@@ -1,0 +1,56 @@
+\documentclass[]{article}  
+\usepackage[classfont=slant,langfont=caps,basic]{complexity}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[scriptsize,tight]{subfigure}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{xspace}
+\usepackage[]{icml2012}
+
+\begin{document}
+\twocolumn[
+\icmltitle{
+  Bayesian Hierarchical Reinforcement Learning
+}
+\icmlauthor{Feng Cao}{gary.doran@case.edu}
+\icmladdress{Case Western Reserve University}
+\icmlauthor{Soumya Ray}{sray@case.edu}
+\icmladdress{Case Western Reserve University}
+\icmlkeywords{Hierarchical Reinforcement Learning, MAXQ, Bayesian Reinforcement Learning}
+
+\vskip 0.3in
+]
+
+\begin{abstract} \small\baselineskip=9pt 
+We describe an approach to
+  incorporating Bayesian priors in the MAXQ framework for hierarchical
+  reinforcement learning (HRL). We define priors on the primitive
+  environment model and on task pseudo-rewards. Since models for
+  composite tasks can be complex, we use a mixed
+  model-based/model-free learning approach to find an optimal
+  hierarchical policy. We show empirically that (i) our approach
+  results in improved convergence over non-Bayesian baselines, given
+  sensible priors, (ii) task hierarchies and Bayesian priors can be complementary sources of information, and using both sources is better than either alone, 
+  (iii) taking advantage of the structural decomposition induced by
+  the task hierarchy significantly reduces the computational cost of
+  Bayesian reinforcement learning and (iv) in this framework, task
+  pseudo-rewards can be learned instead of being manually specified,
+  leading to automatic learning of hierarchically optimal rather than
+  recursively optimal policies.
+\end{abstract}
+\input{introduction}
+\input{relwork}
+\input{algorithm}
+\input{experiments}
+\input{conclusion}
+
+\bibliographystyle{icml2012}
+{\footnotesize
+\bibliography{main}
+}
+\end{document}
+

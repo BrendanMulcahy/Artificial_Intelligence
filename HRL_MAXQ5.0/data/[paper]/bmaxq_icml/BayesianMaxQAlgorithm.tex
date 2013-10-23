@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Learning
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{algorithm}[t]
+\caption{BayesianMaxQ-Q} \label{fig:MBBHRL}
+\begin{algorithmic}[1]
+\REQUIRE MaxNode $i$, State $s$, Integer $m$
+\ENSURE $seq$: sequence of states visited while executing $i$
+\STATE Let $seq=()$ be the sequence of states visited while executing $i$
+
+\IF{$i$ is a primitive MaxNode}
+\IF{$m==-1$}
+\STATE Execute $i$, get $r$, $s'$
+\STATE Update Model distribution for $i$
+\STATE Get $n$ new samples $r^{(k)}$, $k=1, 2, ... n$
+\FOR{$k=1$ to $n$}
+\STATE $V_{t+1}^{(k)}(i,s) = r^{(k)}$
+\ENDFOR
+\ELSE
+\STATE Sample from $m^{th}$ model, get $R^{(m)}(s, i)$ and $s'$
+\STATE $V_{t+1}^{(m)}(i,s) = (1-\alpha_t(i))\cdot V_t^{(m)}(i,s)+\alpha_t(i)\cdot R^{(m)}(s, i)$
+\ENDIF
+\STATE Push $s$ onto the beginning of $seq$
+
+\ELSE
+\WHILE{$T_i(s)$ is false}
+\IF{$m==-1$}
+\FOR{$k=1$ to $n$}
+\STATE Calculate $Q^{(k)}$ from $V^{(k)}$ and $C^{(k)}$
+\ENDFOR
+\STATE Take $Q$ as the average of $Q^{(1)}$ to $Q^{(n)}$
+\STATE Choose an epsilon greedy action $a$ according to $Q$ calculated above
+\ELSE
+\STATE Calculate $Q^{(m)}$ from $V^{(m)}$ and $C^{(m)}$
+\STATE Choose an epsilon greedy action $a$ according to $Q^{(m)}$
+\ENDIF
+\STATE Let $childSeq$={\bf BayesianMaxQ-Q}($a$, $s$, $m$)
+\STATE Observe result state $s'$, and cumulative reward $r'$, store them
+\IF{$m==-1$}
+\STATE Let $a^*$ be the greedy optimal action based on $Q$
+\ELSE
+\STATE Let $a^*$ be the greedy optimal action based on $Q^{(m)}$
+\ENDIF
+\STATE Let $N=1$
+\FOR{each $s$ in $childSeq$}
+\IF{$m==-1$}
+\FOR{$k=1$ to $n$}
+\STATE $C_{t+1}^{(k)}=(1-\alpha_t(i))\cdot C_t^{(k)}(i,s,a) + \alpha_t(i)\cdot r^N\bigl[C_t^{(k)}(i,s',a^*)+V_t^{(k)}(a^*,s') \bigr]$
+\ENDFOR
+\ELSE
+\STATE $C_{t+1}^{(m)}=(1-\alpha_t(i))\cdot C_t^{(m)}(i,s,a) + \alpha_t(i)\cdot r^N\bigl[C_t^{(m)}(i,s',a^*)+V_t^{(m)}(a^*,s') \bigr]$
+\ENDIF
+\ENDFOR
+\STATE Append $childSeq$ onto the front of $seq$
+\STATE $s=s'$
+\ENDWHILE
+\IF{$m==-1$}
+\FOR{$k=1$ to $n$}
+\STATE {\bf Simulation}($i$, $s$, $k$)
+\ENDFOR
+\ENDIF
+
+\RETURN $seq$
+\ENDIF
+
+\end{algorithmic}
+\end{algorithm} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Execution
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{algorithm}[t]
+\caption{HPolicyExecution} \label{fig:ExePolicy}
+\begin{algorithmic}[1]
+\REQUIRE MaxNode $i$, State $s$
+
+\IF{$i$ is a primitive MaxNode}
+\STATE Execute $i$
+
+\ELSE
+\WHILE{$T_i(s)$ is false}
+\FOR{$k=1$ to $n$}
+\STATE Calculate $Q^{(k)}$ from $V^{(k)}$ and $C^{(k)}$
+\ENDFOR
+\STATE Take $Q$ as the average of $Q^{(1)}$ to $Q^{(n)}$
+\STATE Choose a greedy action $a$ according to $Q$ calculated above
+\STATE {\bf HPolicyExecution}($a$, $s$)
+\STATE Observe result state $s'$
+\STATE $s=s'$
+\ENDWHILE
+\ENDIF
+
+\end{algorithmic}
+\end{algorithm} 
+\end{document}
+
+
+
+
+
+
+
+
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+

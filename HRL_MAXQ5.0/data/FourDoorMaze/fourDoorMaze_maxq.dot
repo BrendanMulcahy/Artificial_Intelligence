@@ -1,0 +1,83 @@
+graph maxq {
+MaxRoot [shape=triangle];
+MaxR1 [shape=triangle];
+MaxR2 [shape=triangle];
+MaxR3 [shape=triangle];
+MaxR4 [shape=triangle];
+MaxEnterCommon [shape=triangle];
+MaxExitCommon [shape=triangle];
+North [shape=triangle];
+East [shape=triangle];
+West [shape=triangle];
+South [shape=triangle];
+
+node [shape=Mrecord];
+
+QEnterCommon1 [label="QEnter\nCommon1"];
+QExitCommon1 [label="QExit\nCommon1"];
+QEnterCommon2 [label="QEnter\nCommon2"];
+QExitCommon2 [label="QExit\nCommon2"];
+QEnterCommon3 [label="QEnter\nCommon3"];
+QExitCommon3 [label="QExit\nCommon3"];
+QEnterCommon4 [label="QEnter\nCommon4"];
+QExitCommon4 [label="QExit\nCommon4"];
+
+QNorthForEnter [label="QNorth\nForEnter"]
+QEastForEnter [label="QEast\nForEnter"]
+QWestForEnter [label="QWest\nForEnter"]
+QSouthForEnter [label="QSouth\nForEnter"]
+
+QNorthForExit [label="QNorth\nForExit"]
+QEastForExit [label="QEast\nForExit"]
+QWestForExit [label="QWest\nForExit"]
+QSouthForExit [label="QSouth\nForExit"]
+
+MaxRoot--QR1;
+MaxRoot--QR2;
+MaxRoot--QR3;
+MaxRoot--QR4;
+
+QR1--MaxR1;
+QR2--MaxR2;
+QR3--MaxR3;
+QR4--MaxR4;
+
+MaxR1--QEnterCommon1;
+MaxR2--QEnterCommon2;
+MaxR3--QEnterCommon3;
+MaxR4--QEnterCommon4;
+
+MaxR1--QExitCommon1;
+MaxR2--QExitCommon2;
+MaxR3--QExitCommon3;
+MaxR4--QExitCommon4;
+
+QEnterCommon1--MaxEnterCommon;
+QExitCommon1--MaxExitCommon;
+QEnterCommon2--MaxEnterCommon;
+QExitCommon2--MaxExitCommon;
+QEnterCommon3--MaxEnterCommon;
+QExitCommon3--MaxExitCommon;
+QEnterCommon4--MaxEnterCommon;
+QExitCommon4--MaxExitCommon;
+
+MaxEnterCommon--QNorthForEnter;
+MaxEnterCommon--QEastForEnter;
+MaxEnterCommon--QWestForEnter;
+MaxEnterCommon--QSouthForEnter;
+
+MaxExitCommon--QNorthForExit;
+MaxExitCommon--QEastForExit;
+MaxExitCommon--QWestForExit;
+MaxExitCommon--QSouthForExit;
+
+QNorthForEnter--North;
+QEastForEnter--East;
+QWestForEnter--West;
+QSouthForEnter--South;
+
+QNorthForExit--North;
+QEastForExit--East;
+QWestForExit--West;
+QSouthForExit--South;
+}

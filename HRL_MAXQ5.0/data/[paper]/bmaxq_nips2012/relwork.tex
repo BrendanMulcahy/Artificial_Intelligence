@@ -1,0 +1,129 @@
+\section{Background and Related Work}
+\label{sec:relwork}
+
+% In this section, we describe  {\sc maxq} and Bayesian model-based reinforcement
+% learning.
+
+In the {\sc maxq} framework, each composite subtask $T_i$ defines a
+semi-Markov decision process  with parameters $\langle
+S_i,X_i,C_i,G_i \rangle$. $S_i$ defines the set of
+``non-terminal'' states for $T_i$, where $T_i$ may be called by its
+parent. $G_i$ defines a set of ``goal'' states for
+$T_i$. 
+% Thus {\sc maxq} tries to learn a value function (or policy) for $T_i$
+% that takes it from any $S_i$ to any $G_i$. 
+The actions available
+within $T_i$ are described by the set of ``child tasks'' $C_i$.
+Finally, $X_i$ denotes the set of ``relevant state variables'' for
+$T_i$. 
+% These variables parametrize the value function (or
+% policy) that MAXQ learns for $T_i$.  
+Often, we unify  $S_i$ and (the negation of) $G_i$ into a single
+``termination'' predicate, $P_i$. An
+$(s,a,s')$ triple where $P_i(s)$ is false, $P_i(s')$ is true, $a \in
+C_i$, and the transition probability $P(s'|s,a)>0$ is called an {\em
+  exit} of the subtask $T_i$. A pseudo-reward function
+$\tilde{R}(s,a)$ can be defined over exits to express preferences over
+the possible exits of a subtask. 
+% Pseudo-rewards are often used to
+% provide ``contextual'' information to a subtask about the behavior of
+% the rest of the task hierarchy.
+
+%A subtask can be invoked in any state $s$ where $P_i(s)$ is false, and
+%it terminates when an exit causes $P_i(s')$ to become true.  The set
+%$S_i$ is defined using a projection function that maps a world state
+%to an abstract state defined by a subset of the state variables $X_i$. If
+% the abstraction function is \textit{safe}, it will only merge the
+% world states that have the same value function into an abstracted
+% state.
+%   A {\em local policy} for the subtask $T_i$ is a mapping from
+% the states $S_i$ to $C_i$.
+  A hierarchical policy $\pi$ for the
+overall task is an assignment of a local policy to each SMDP $T_i$.  A
+\textit{hierarchically optimal policy} is a 
+hierarchical policy that has the maximum expected reward.  A
+hierarchical policy is said to be \textit{recursively optimal} if the
+local policy for each subtask is optimal given that all its subtask
+policies are optimal.  
+%Recursively optimal policies can be obtained by
+%fixing all pseudo-rewards to zero. 
+Given a task graph,
+model-free~\cite{d-hrl-00} or model-based~\cite{rmax-maxq} methods can
+be used to learn value functions for each task-subtask pair.
+% , and used
+% to determine the hierarchical policy (which subtask to call at each
+% level for each state). 
+In the model-free method, a policy is produced by maintaining a value
+and a {\em completion} function for each subtask. For a task $i$, the
+value $V(a,s)$ denotes the expected value of calling child task $a$ in
+state $s$. This is (recursively) estimated as the expected reward
+obtained while executing $a$. The completion function $C(i,s,a)$
+denotes the expected reward obtained while {\em completing} $i$ after
+having called $a$ in $s$. The central idea behind {\sc maxq} is that
+the value of $i$, $V(i,s)$, can be (recursively) decomposed in terms
+of $V(a,s)$ and $C(i,s,a)$. The model-based {\sc
+rmaxq}~\cite{rmax-maxq} algorithm extends {\sc
+rmax}~\cite{Brafman01r-max} to {\sc maxq} by learning models for all
+primitive and composite tasks. Value iteration is used with these
+models to learn a policy for each subtask. An optimistic exploration
+strategy is used together with a parameter $m$ that
+determines how often a transition or reward needs to be seen to be
+usable in the planning step.
+% In fact, by maintaining and updating
+% $C(i,s,a)$ and $V(a,s)$ for primitive $a$, it is possible to
+% reconstruct $V(i,s)$ for any $i$ and so construct a hierarchical
+% policy.
+
+In the {\sc maxq} framework, pseudo-rewards must be manually specified
+to learn hierarchically optimal policies. Recent work has attempted to
+directly learn hierarchically optimal policies for ALisp partial
+programs, that generalize {\sc maxq} task
+hierarchies~\cite{alisp,marthi.uai06}, using a model-free
+approach. Here, along with task value and completion functions, an
+``external'' $Q$ function $Q_E$ is maintained for each subtask. This
+function stores the reward obtained after the parent of a subtask
+exits. A problem here is that this hurts state abstraction, since
+$Q_E$ is no longer ``local'' to a subtask. In later
+work~\cite{marthi.uai06}, this is addressed by recursively
+representing $Q_E$ in terms of task value and completion functions,
+linked by conditional probabilities of parent exits given child
+exits. The conditional probabilities and recursive decomposition are
+used to compute $Q_E$ as needed to select actions.
+
+Bayesian reinforcement learning methods incorporate probabilistic
+prior knowledge on models~\cite{dearden.uai99}, value
+functions~\cite{Dearden98,Engel03},
+policies~\cite{Ghavamzadeh07bayesianpolicy} or
+combinations~\cite{ghavamzadeh:icml07}. One Bayesian model-based RL
+algorithm proceeds as follows. At each step, a distribution over model
+parameters is maintained.  At each step, a model is sampled from this
+distribution (Thompson sampling~\cite{Thompson, Strens}). This model
+is then solved and actions are taken according to the policy
+obtained. This yields observations that 
+are used to update the parameters of the current distribution to
+create a posterior distribution over models. This procedure is then
+iterated to convergence.
+% As more observations are obtained, the posterior distribution is
+% refined to focus around the true environment model, and the policy
+% asymptotically converges to the optimal policy for this model.
+Variations of this idea have been investigated; for
+example, some work converts the distribution over models to an
+empirical distribution over $Q$-functions, and produces policies by
+sampling from this distribution instead~\cite{dearden.uai99}.
+
+
+Relatively little work exists that attempts to incorporate
+probabilistic priors into HRL. We have found one preliminary
+attempt~\cite{Zhao-bhrl-2010} that builds on the {\sc
+  rmax+maxq}~\cite{rmax-maxq} method.  This 
+ approach adds priors to each subtask model and performs
+(separate) Bayesian model-based learning for each
+subtask.~\footnote{While we believe this description is accurate,
+  unfortunately, due to language issues and some missing technical and
+  experimental details in the cited article, we have been unable to
+  replicate this work.} In our approach, we do not construct models
+for subtasks, which can be very complex in general.  Instead, we only
+maintain distributions over primitive actions, and use a mixed
+model-based/model-free learning algorithm that naturally integrates
+into the standard {\sc maxq} learning algorithm. Further, we show how
+to learn pseudo-rewards for {\sc maxq} in the Bayesian framework.

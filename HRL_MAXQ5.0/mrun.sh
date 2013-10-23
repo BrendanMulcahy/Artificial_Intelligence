@@ -1,0 +1,1 @@
+java -cp bin:lib/* edu.cwru.eecs.rl.MultiThreadMain $*

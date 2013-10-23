@@ -1,0 +1,93 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Bayesian-MaxQ
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{algorithm}[t]
+\caption{BAYESIAN-MAXQ} \label{fig:MayesianMaxQ}
+\begin{algorithmic}[1]
+\REQUIRE MaxNode $i$, State $s$
+\ENSURE Next State $s$', Steps taken $N$
+
+\IF{$i$ is primitive}
+\STATE Execute $i$, get $r$, $s'$
+\STATE UPDATE-MODEL($s$, $i$, $r$, $s'$)
+\STATE $V(i,s) \leftarrow (1-\alpha)\cdot V(i,s)+\alpha\cdot r$
+\STATE $i.count \leftarrow i.count+1$
+\RETURN (s', 1)
+
+\ELSE
+\STATE $N \leftarrow 0$
+\WHILE {$T_i(s)$ is false}
+\STATE COMPUTE-POLICY($i$, $s$)
+\STATE $a\leftarrow \pi_{\epsilon}($i$, $s$)$
+\STATE $(s', N_a)\leftarrow$ BAYESIAN-MAXQ($a$, $s$)
+\STATE $a^*\leftarrow \arg\max_{a'}\bigl[C(i,s',a')+V(a',s')\bigr]$
+\STATE $C\leftarrow(1-\alpha)\cdot C(i,s,a) + \alpha\cdot \gamma^{N_a}\bigl[C(i,s',a^*)+V(a^*,s') \bigr]$
+\STATE $s\leftarrow s'$
+\STATE $N\leftarrow N+N_a$
+\STATE $i.count \leftarrow i.count+1$
+\ENDWHILE
+\RETURN (s', N)
+\ENDIF
+\end{algorithmic}
+\end{algorithm} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Compute-policy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[t]
+\caption{COMPUTE-POLICY} \label{fig:ComputePolicy}
+\begin{algorithmic}[1]
+\REQUIRE MaxNode $i$, State $s$
+\IF [\ensuremath{T} is manually set update interval] {$i.count>T$}  	
+\IF{$i$ is primitive}  
+\FORALL {State $s$ in STATE($i$)}
+\STATE $V(i, s)\leftarrow $MAP-REWARD($i$, $s$) 
+\ENDFOR
+\ELSE
+\FORALL {$a \in$ ACTION($i$)}
+\STATE Reset $a$'s Completion Function $C(i, ., .)$
+\STATE COMPUTE-POLICY($a$, $s$)
+\ENDFOR
+\FOR [\ensuremath{K} is manually set maximum simulation times] {$k=1$ to $K$} 
+\STATE Randomly sample a state $s$ from current MAP Model
+\STATE MAXQ-SIMULATION($i$, $s$)
+\ENDFOR
+\ENDIF
+\STATE $i.count \leftarrow 0$
+\ENDIF
+\end{algorithmic}
+\end{algorithm} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  MaxQ-Simulation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[t]
+\caption{MAXQ-SIMULATION} \label{fig:MaxQSimulation}
+\begin{algorithmic}[1]
+\REQUIRE MaxNode $i$, State $s$
+\ENSURE Next State $s$', Steps taken $N$
+\STATE This algorithm is just exactly the same as Tom's standard MaxQ-Q algorithm, except that the reward and next state are coming from the model rather than from the real environment. So I don't think it's needed to specify it here. 
+\end{algorithmic}
+\end{algorithm} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+graph maxq {
+
+MaxRoot [shape=triangle];
+MaxGetGold [shape=triangle];
+MaxGetWood [shape=triangle];
+MaxGWDeposit [shape=triangle];
+Goto [shape=triangle, label="Goto(t)"];
+MineGold [shape=triangle];
+ChopWood [shape=triangle];
+Deposit [shape=triangle];
+
+QGotoForGetGold [label="QGotoForGetGold(t)"]
+QGotoForGetWood [label="QGotoForGetWood(t)"]
+QGotoForGWDeposit [label="QGotoForGWDeposit(t)"]
+
+node [shape=Mrecord];
+
+MaxRoot--QGetGold;
+MaxRoot--QGetWood;
+MaxRoot--QGWDeposit;
+
+QGetGold--MaxGetGold;
+QGetWood--MaxGetWood;
+QGWDeposit--MaxGWDeposit;
+
+MaxGetGold--QGotoForGetGold [label="t/Loc"];
+MaxGetGold--QMineGold;
+
+MaxGetWood--QGotoForGetWood [label="t/Loc"];
+MaxGetWood--QChopWood;
+
+MaxGWDeposit--QGotoForGWDeposit [label="t/Loc"];
+MaxGWDeposit--QDeposit;
+
+QGotoForGetGold--Goto [label="t/t"];
+QGotoForGetWood--Goto [label="t/t"];
+QGotoForGWDeposit--Goto [label="t/t"];
+QMineGold--MineGold;
+QChopWood--ChopWood;
+QDeposit--Deposit;
+}

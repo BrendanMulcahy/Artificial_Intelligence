@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{d-hrl-00}
+Thomas~G. Dietterich.
+\newblock Hierarchical reinforcement learning with the maxq value function
+  decomposition.
+\newblock {\em Journal of Artificial Intelligence Research}, 13:227--303, 2000.
+
+\bibitem{mehta.icml08}
+N.~Mehta, S.~Ray, P.~Tadepalli, and T.~Dietterich.
+\newblock Automatic discovery and transfer of {MAXQ} hierarchies.
+\newblock In Andrew McCallum and Sam Roweis, editors, {\em Proceedings of the
+  25th International Conference on Machine Learning}, pages 648--655.
+  Omnipress, 2008.
+
+\end{thebibliography}

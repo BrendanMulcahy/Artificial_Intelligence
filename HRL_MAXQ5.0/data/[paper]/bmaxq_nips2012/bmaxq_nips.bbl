@@ -1,0 +1,135 @@
+\begin{thebibliography}{10}
+
+\bibitem{suttbarto}
+R.S. Sutton and A.~G. Barto.
+\newblock {\em Reinforcement Learning: An Introduction}.
+\newblock MIT Press, 1998.
+
+\bibitem{kaelbling.jair96}
+Leslie~Pack Kaelbling, Michael~L. Littman, and Andrew~W. Moore.
+\newblock Reinforcement learning: A survey.
+\newblock {\em Journal of Artificial Intelligence Research}, 4:237--285, 1996.
+
+\bibitem{barto.deds03}
+Andrew~G. Barto and Sridhar Mahadevan.
+\newblock Recent advances in hierarchical reinforcement learning.
+\newblock {\em Discrete Event Dynamic Systems}, 13(4):341--379, 2003.
+
+\bibitem{stolle.book02}
+Martin Stolle and Doina Precup.
+\newblock {\em Learning Options in reinforcement Learning}, volume 2371/2002 of
+  {\em Lecture Notes in Computer Science}, pages 212--223.
+\newblock Springer, 2002.
+
+\bibitem{d-hrl-00}
+Thomas~G. Dietterich.
+\newblock Hierarchical reinforcement learning with the maxq value function
+  decomposition.
+\newblock {\em Journal of Artificial Intelligence Research}, 13:227--303, 2000.
+
+\bibitem{alisp}
+D.~Andre and S.~Russell.
+\newblock {State Abstraction for Programmable Reinforcement Learning Agents}.
+\newblock In {\em Proceedings of AAAI}, 2002.
+
+\bibitem{dearden.uai99}
+R.~Dearden, N.~Friedman, and D.~Andre.
+\newblock Model based bayesian exploration.
+\newblock In {\em Proceedings of Fifteenth Conference on Uncertainty in
+  Artificial Intelligence}. Morgan Kaufmann, 1999.
+
+\bibitem{Dearden98}
+R.~Dearden, N.~Friedman, and S.~Russell.
+\newblock Bayesian {Q}-learning.
+\newblock In {\em Proceedings of the Fifteenth National Conference on
+  Artificial Intelligence}, 1998.
+
+\bibitem{Engel03}
+Y.~Engel, S.~Mannor, and R.~Meir.
+\newblock Bayes meets {B}ellman:the {G}aussian process approach to temporal
+  difference learning.
+\newblock In {\em Proceedings of the 20th Internationl Conference on Machine
+  Learning}, 2003.
+
+\bibitem{Ghavamzadeh07bayesianpolicy}
+Mohammad Ghavamzadeh and Yaakov Engel.
+\newblock Bayesian policy gradient algorithms.
+\newblock In {\em Advances in Neural Information Processing Systems 19}. MIT
+  Press, 2007.
+
+\bibitem{Lazaric_bayesianmulti-task}
+Alessandro Lazaric and Mohammad Ghavamzadeh.
+\newblock Bayesian multi-task reinforcement learning.
+\newblock In {\em Proc. 27th International Conference on Machine Learning},
+  2010.
+
+\bibitem{icml2007}
+Aaron Wilson, Alan Fern, Soumya Ray, and Prasad Tadepalli.
+\newblock Multi-task reinforcement learning: a hierarchical bayesian approach.
+\newblock In {\em ICML '07: Proceedings of the 24th international conference on
+  Machine learning}, pages 1015--1022, New York, NY, USA, 2007. ACM.
+
+\bibitem{mehta.icml08}
+N.~Mehta, S.~Ray, P.~Tadepalli, and T.~Dietterich.
+\newblock Automatic discovery and transfer of {MAXQ} hierarchies.
+\newblock In Andrew McCallum and Sam Roweis, editors, {\em Proceedings of the
+  25th International Conference on Machine Learning}, pages 648--655.
+  Omnipress, 2008.
+
+\bibitem{rmax-maxq}
+Nicholas~K. Jong and Peter Stone.
+\newblock Hierarchical model-based reinforcement learning: R-max + maxq.
+\newblock In {\em Proceedings of the 25 th International Conference on Machine
+  Learning}, 2008.
+
+\bibitem{Brafman01r-max}
+Ronen~I. Brafman, Moshe Tennenholtz, and Pack Kaelbling.
+\newblock R-max - a general polynomial time algorithm for near-optimal
+  reinforcement learning.
+\newblock {\em Journal of Machine Learning Research}, 2001.
+
+\bibitem{marthi.uai06}
+B.~Marthi, S.~Russell, and D.~Andre.
+\newblock A compact, hierarchically optimal q-function decomposition.
+\newblock In {\em 22nd Conference on Uncertainty in Artificial Intelligence},
+  2006.
+
+\bibitem{ghavamzadeh:icml07}
+M.~Ghavamzadeh and Y.~Engel.
+\newblock Bayesian actor-critic algorithms.
+\newblock In Zoubin Ghahramani, editor, {\em Proceedings of the 24th Annual
+  International Conference on Machine Learning (ICML 2007)}, pages 297--304.
+  Omnipress, 2007.
+
+\bibitem{Thompson}
+W.~R. Thompson.
+\newblock On the likelihood that one unknown probability exceeds another in
+  view of the evidence of two samples.
+\newblock {\em Biometrika}, 25:285--294, 1933.
+
+\bibitem{Strens}
+M.~J.~A. Strens.
+\newblock A {B}ayesian framework for reinforcement learning.
+\newblock In {\em Proceeding of the 17th International Conference on Machine
+  Learning}, 2000.
+
+\bibitem{Zhao-bhrl-2010}
+Zhaohui Dai, Xin Chen, Weihua Cao, and Min Wu.
+\newblock Model-based learning with bayesian and maxq value function
+  decomposition for hierarchical task.
+\newblock In {\em Proceedings of the 8th World Congress on Intelligent Control
+  and Automation}, 2010.
+
+\bibitem{mooreatkeson93}
+A.W. Moore and C.G. Atkeson.
+\newblock Prioritized sweeping: Reinforcement learning with less data and less
+  time.
+\newblock {\em Machine Learning}, 13(1):103--130, 1993.
+
+\bibitem{parr:thesis}
+Ronald~Edward Parr.
+\newblock {\em Hierarchical Control and Learning for Markov Decision
+  Processes}.
+\newblock PhD thesis, 1998.
+
+\end{thebibliography}

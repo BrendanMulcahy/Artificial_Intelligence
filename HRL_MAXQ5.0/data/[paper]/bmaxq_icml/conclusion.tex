@@ -1,0 +1,21 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this paper, we have proposed an approach to incorporating
+probabilistic priors on environment models and task pseudo-rewards
+into HRL by extending the {\sc maxq} framework. Our approach uses a
+combination of model-based and model-free learning to compute a
+hierarchically optimal policy. Our experiments indicate that several
+synergies exist between HRL and Bayesian RL, and combining them is
+fruitful. In future work, we plan to investigate more complex domains,
+where models and value functions cannot be exactly represented, as well as investigate multi-task RL scenarios where the priors we currently assume to be given can be learned.
+
+% priors can speedup convergence for HRL; (ii) however, good priors can
+% reduce or eliminate the convergence advantage of HRL over flat RL, if
+% the hierarchy does not encode ``strong'' policy constraints, and (iii)
+% the cost of Bayesian RL can be reduced in the HRL setting, because the
+% sampled solutions only involve subtasks rather than the whole task and
+% so can be substantially more efficient. In future work, we propose to
+% investigate methods to incorporate priors on value funcitons into the
+% learning process, as well as investigate multi-task RL scenarios where
+% the priors we currently assume to be given can be learned.

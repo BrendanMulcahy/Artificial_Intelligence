@@ -1,0 +1,40 @@
+We thanks the reviewers for their insightful feedback. We will edit the paper to account for some of the unclear details. As for the comments about comparisons with other approaches, we will try to add them in a long version of the article we are preparing. According to the reviews, we here put some insights over similar approaches compared with our approach, and then clarify some algorithmic and descriptive details about the paper.
+
+1. Comparison with Rmax-MaxQ:
+In Rmax-MaxQ approach, models for each subtasks are built and maintained. Thus with a complex hierarchy, the number of transitions we need to traces will become larger and larger, which arises the storage and computation issues. However, in terms of the sample complexity, we believe that the performance of Rmax-MaxQ and our bayesian HRL approach with uniform prior will be very similar to each other. Moreover, since in our approach, we have a Bayesian probabilistic model over primitive tasks, it's easy to incorporate good prior knowledge into the learning process, which has been shown in our experimental that results in an effective acceleration of learning in terms of the sample complexity. As of the computational costs, it's actually a function of the prior knowledge, which means that a good prior will dramatically reduce the computational time of our method, as also demonstrated in our experimental results.
+
+2. Comparison with ALisp (from the Andre+Russell paper):
+We thank the second reviewer for pointing out this work, which we unfortunately omitted in our literature search. However we did have a TD-updating version of pseudo reward under MaxQ framework, and empirically showed the drawback of it compared with our approach. Actually in ALisp approach, Q-values are decomposed into three parts, namely, reward "R", completion value "C", and external value "E". Here external values are actually very similar to our definition of pseudo reward. And ALisp algorithm is able to guarantee the convergence to hierarchically optimal policy. However, as far as we are concerned, ALisp algorithm keeps an external value for each pair of state, subtask pairs. And the number would grow large as it's hard to introduce state abstraction into the external values when taking into account the global information outside current subtask. And it will need a lot of prior knowledge on how to define the state abstraction for each component of the Q-values. Although we think our method needs less information to make pseudo reward taking effect, we will compare two approaches in our future work.
+
+3. Comparison with Model Based MaxQ Algorithm:
+Although we miss the comparison between our approach and the model based version of MaxQ algorithm, it's reasonable to indicate that the performance of our approach with uniform prior will be very similar to the model based MaxQ algorithm. However, again, we emphasis that our approach is able to utilize prior knowledge of the task. 
+
+4. Some other minor issues on algorithmic and descriptive details:
+4.1 Learning the pseudo reward:
+Due to the space constraint, probably we didn't make it so clear to the reader for some details about how we learn the pseudo reward. Firstly, we use gaussian distribution to represent the pseudo reward for each exit state. And gaussian-gamma distribution is used as prior, since it's the conjugate distribution of gaussian distribution with respect to mean and variance. Secondly, since pseudo reward is essentially the expected cumulative reward of the exiting state under the hierarchically optimal policy. So at the beginning of the learning process, the empirical observations we get and use to update the pseudo reward function is noisy. They are not actually sample of the real pseudo reward distribution. However as learning goes, the empirical data we get are better and better. So we remove the previously seen bad observations and use the newly ones. 
+
+4.2 Implementation decisions in algorithm:
+There are a couple of parameters appeared in the algorithm. Some of them are specified a priori according to which methods is used, while the others are just tuned for different domains. For example, the learning rate alpha, exploration rate epsilon, and discount rate gamma are specified with proper values and keep the same for comparable methods. There are other parameters, such as update interval k, simulation episodes sim, which are specified based on domains for the sake of computational efficiency. Theoretically, k should be 1, and sim should be unlimited, meaning that we should update our model every step when we have new observation, and compute the new policy with simulation until converged. However, in practice, for different domains we can empirically set k to be 20 or 40, and set sim to be 200 or 500, while still get reasonable results.
+
+4.3 Our approach on not-already-solved problem:
+While we have some experimental results showing the application of our approach in domains with thousands of states, we are still looking for the applicability of our methods on more complex problems. We are actually working on incorporate our methods with function approximation over value functions, so that it won't suffer from curse of dimension. Also, based on the advantage of our methods over other alternatives on some domains, it should be reasonable to indicate that our methods will handle more complex domains.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
